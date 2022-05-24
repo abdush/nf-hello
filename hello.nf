@@ -15,11 +15,11 @@ process splitLetters {
     output:
     file 'chunk_*' into letters_ch
 
+    script:
     """
     printf '$x' | split -b 6 - chunk_
     """
 }
-
 
 process convertToUpper {
 
@@ -28,13 +28,11 @@ process convertToUpper {
 
     output:
     stdout into result_ch
-    //file "${y}_conv.txt" into result_ch
 
+    script:
     """
-    #cat $y | tr '[a-z]' '[A-Z]'
-    cat $y | tr '[a-z]' '[A-Z]' | rev
-    #cat $y | tr '[a-z]' '[A-Z]' | rev > ${y}_conv.txt 
+    cat $y | tr '[a-z]' '[A-Z]'
     """
 }
 
-result_ch.view{ it }
+result_ch.view()
